@@ -57,7 +57,10 @@ To include a " character, it can be escaped with \", Similarly, \ can be escaped
 When two strings are added together, it concatenates them.\
 \
 Numbers are strictly integers, when division occurs, values are truncated\
+Numbers may start with a - symbol to denote they are negative.\
 \
 Flags can either be up or down as a binary value\
 If two flags are added, it is an 'or' expression, if they are multiplied it is an 'and' expression.\
 The ? symbol represents greater than or equal to. It is the only comparator operation needed.\
+\
+We end all statements with a smiley face :) because we are happy to write code.\

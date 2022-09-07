@@ -48,12 +48,10 @@ Symbol newSym(int tokenId, Object value) {
 /*-*
  * PATTERN DEFINITIONS:
  */
-
-
-/**
- * Implement patterns as regex here
- */
-
+number = -?[0-9]+
+id = [a-zA-Z]+
+letter = [[^\n]&&[^\t]&&[^\\][^\"]]|\\\\|\\"
+string = \"{letter}*\"
 whitespace = [ \n\t\r]
 
 
@@ -62,11 +60,33 @@ whitespace = [ \n\t\r]
 /**
  * LEXICAL RULES:
  */
-
-/**
- * Implement terminals here, ORDER MATTERS!
- */
- 
+start {return newSym(sym.START, "start")}
+end {return newSym(sym.END, "end")}
+in {return newSym(sym.IN, "in")}
+out {return newSym(sym.OUT, "out")}
+"(" {return newSym(sym.LPAREN, "(")}
+")" {return newSym(sym.RPAREN, ")")}
+":"
+number
+string
+flag
+main {return newSym(sym.MAIN, "main")}
+":)"
+"<-" 
+read
+write
+call
+when
+do
+done
+"+"
+"-"
+"*"
+"/"
+up
+down
+flip
+"?"
 {whitespace}    { /* Ignore whitespace. */ }
 .               { System.out.println("Illegal char, '" + yytext() +
                     "' line: " + yyline + ", column: " + yychar); } 
