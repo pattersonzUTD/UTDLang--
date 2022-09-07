@@ -62,9 +62,9 @@ whitespace = [ \n\t\r]
  */
 start           {return newSym(sym.START, "start");}
 end             {return newSym(sym.END, "end");}
-{id}            {return newSym(sym.ID, yytext());}
 in              {return newSym(sym.IN, "in");}
 out             {return newSym(sym.OUT, "out");}
+":)"            {return newSym(sym.SMILE, ":)");}
 "("             {return newSym(sym.LPAREN, "(");}
 ")"             {return newSym(sym.RPAREN, ")");}
 ":"             {return newSym(sym.COLON, ":");}
@@ -72,7 +72,6 @@ number          {return newSym(sym.NUMBER, "number");}
 string          {return newSym(sym.STRING, "string");}
 flag            {return newSym(sym.FLAG, "flag");}
 main            {return newSym(sym.MAIN, "main");}
-":)"            {return newSym(sym.SMILE, ":)");}
 "<-"            {return newSym(sym.ASSIGN, "<-");}
 read            {return newSym(sym.READ, "read");}
 write           {return newSym(sym.WRITE, "write");}
@@ -80,16 +79,17 @@ call            {return newSym(sym.CALL, "call");}
 when            {return newSym(sym.WHEN, "when");}
 do              {return newSym(sym.DO, "do");}
 done            {return newSym(sym.DONE, "done");}
-{number}        {return newSym(sym.NUMBERLIT, yytext());}
-"+"             {return newSym(sym.PLUS, "+");}
 "-"             {return newSym(sym.MINUS, "-");}
+"+"             {return newSym(sym.PLUS, "+");}
 "*"             {return newSym(sym.MULTIPLY, "*");}
 "/"             {return newSym(sym.DIVIDE, "/");}
-{string}        {return newSym(sym.STRINGLIT, yytext());}
 up              {return newSym(sym.UP, "up");}
 down            {return newSym(sym.DOWN, "down");}
 flip            {return newSym(sym.FLIP, "flip");}
 "?"             {return newSym(sym.QUESTION, "?");}
+{id}            {return newSym(sym.ID, yytext());}
+{number}        {return newSym(sym.NUMBERLIT, new Integer(yytext()));}
+{string}        {return newSym(sym.STRINGLIT, yytext());}
 {whitespace}    { /* Ignore whitespace. */ }
 .               { System.out.println("Illegal char, '" + yytext() +
                     "' line: " + yyline + ", column: " + yychar); } 
