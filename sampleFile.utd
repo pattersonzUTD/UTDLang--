@@ -33,6 +33,8 @@ main start
      sum (number) :)
      c (number) :)
      approx (flag) :)
+     a <- 01 :)
+     a <- -5 :)
      textBuffer (string) :)
      textBuffer <- "Lets get the length of the hypotenuse!" :)
      write(textBuffer) :)
