@@ -31,7 +31,7 @@ IdList := ID IdList\
 &emsp;         | λ\
 Expression := NumericalExpression\
 &emsp;           | StringExpression\
-&emsp;           | FlagExpression
+&emsp;           | FlagExpression\
 NumericalExpression := NUMBER\
 &emsp;                    | ID\
 &emsp;                    | NumericalExpression + NumericalExpression\
