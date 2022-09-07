@@ -26,7 +26,7 @@ Statement := ID <- Expression :)\
 &emsp;          | read ( ID ) :)\
 &emsp;          | write ( ID ) :)\
 &emsp;          | call ID ( IdList ) :)\
-&emsp;          | when Expression do Statements done :)\
+&emsp;          | when FlagExpression do Statements done :)\
 IdList := ID IdList\
 &emsp;         | λ\
 Expression := NumericalExpression\
@@ -64,5 +64,7 @@ Numbers may start with a - symbol to denote they are negative.\
 Flags can either be up or down as a binary value\
 If two flags are added, it is an 'or' expression, if they are multiplied it is an 'and' expression.\
 The ? symbol represents greater than or equal to. It is the only comparator operation needed.\
+\
+When statements will execute if the flag is up, if not the body is skipped.\
 \
 We end all statements with a smiley face :) because we are happy to write code.\

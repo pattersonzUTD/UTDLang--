@@ -15,14 +15,14 @@ default: run
 FILE=    Lexer.java      parser.java    sym.java \
     LexerTest.java
 
-run: basicTest.txt
+run: sampleFile.utd
 
 all: Lexer.java parser.java $(FILE:java=class)
 
-basicTest.txt: all
-		$(JAVA) -cp $(CP) LexerTest basicTest.txt > basicTest-output.txt
-		cat basicTest.txt
-		cat -n basicTest-output.txt
+sampleFile.utd: all
+		$(JAVA) -cp $(CP) LexerTest sampleFile.utd > sampleFile-output.txt
+		cat sampleFile.utd
+		cat -n sampleFile-output.txt
 
 clean:
 		rm -f *.class *~ *.bak Lexer.java parser.java sym.java
