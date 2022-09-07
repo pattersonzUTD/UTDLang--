@@ -6,48 +6,50 @@ Grammar:
 
 Script := Routines Main\
 Routines := Routine Routines\
-         | λ\
+&emsp;       | λ\
 Routine := ID Ins Outs start Body end\
 Ins := in : ID ( Type ) Ins\
-    | λ\
+&emsp;    | λ\
 Outs := out : ID ( Type ) Outs\
-    | λ\
+&emsp;    | λ\
 Type := number\
-     | string\
-     | flag\
+&emsp;     | string\
+&emsp;     | flag\
 Main := main start Body end\
 Body := Variables Statements\
 Variables := Variable Variables\
-          | λ\
+&emsp;          | λ\
 Variable := ID ( Type ) :)\
 Statements := Statement Statements\
-           | λ\ 
+&emsp;           | λ\ 
 Statement := ID <- Expression :)\
-          | read ( ID ) :)\
-          | write ( ID ) :)\
-          | call ID ( IdList ) :)\
-          | when Expression do Statements done :)\
+&emsp;          | read ( ID ) :)\
+&emsp;          | write ( ID ) :)\
+&emsp;          | call ID ( IdList ) :)\
+&emsp;          | when Expression do Statements done :)\
+IdList := ID IdList\
+&emsp;         | λ\
 Expression := NumericalExpression\
-           | StringExpression\
-           | FlagExpression
+&emsp;           | StringExpression\
+&emsp;           | FlagExpression
 NumericalExpression := NUMBER\
-                    | ID\
-                    | NumericalExpression + NumericalExpression\
-                    | NumericalExpression - NumericalExpression\
-                    | NumericalExpression * NumericalExpression\
-                    | NumericalExpression / NumericalExpression\
+&emsp;                    | ID\
+&emsp;                    | NumericalExpression + NumericalExpression\
+&emsp;                    | NumericalExpression - NumericalExpression\
+&emsp;                    | NumericalExpression * NumericalExpression\
+&emsp;                    | NumericalExpression / NumericalExpression\
 StringExpression := STRING\
-                 | ID\
-                 | StringExpression + StringExpression\
+&emsp;                 | ID\
+&emsp;                 | StringExpression + StringExpression\
 FlagExpression := up\
-               | down\
-               | ID\
-               | flip FlagExpression\
-               | FlagExpression + FlagExpression\
-               | FlagExpression * FlagExpression\
-               | NumericalExpression ? NumericalExpression\
-               
-================
+&emsp;               | down\
+&emsp;               | ID\
+&emsp;               | flip FlagExpression\
+&emsp;               | FlagExpression + FlagExpression\
+&emsp;               | FlagExpression * FlagExpression\
+&emsp;               | NumericalExpression ? NumericalExpression\
+___
+
 Language Features:\
 \
 IDs are strictly numerical characters, upper or lower case is fine\
