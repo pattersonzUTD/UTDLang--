@@ -55,7 +55,7 @@ Language Features:\
 IDs are strictly numerical characters, upper or lower case is fine\
 \
 Strings start with a " and end with a ", they cannot contain any new lines or tab characters\
-To include a " character, it can be escaped with \", Similarly, \ can be escaped with \\ \
+To include a " character, it can be escaped with \\", Similarly, \\ can be escaped with \\\\ \
 When two strings are added together, it concatenates them.\
 \
 Numbers are strictly integers, when division occurs, values are truncated\
