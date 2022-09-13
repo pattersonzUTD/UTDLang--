@@ -21,7 +21,7 @@ Variables := Variable Variables\
 &emsp;          | λ\
 Variable := ID ( Type ) :)\
 Statements := Statement Statements\
-&emsp;           | λ\ 
+&emsp;           | λ\
 Statement := ID <- Expression :)\
 &emsp;          | read ( ID ) :)\
 &emsp;          | write ( ID ) :)\
@@ -47,7 +47,7 @@ FlagExpression := up\
 &emsp;               | flip FlagExpression\
 &emsp;               | FlagExpression + FlagExpression\
 &emsp;               | FlagExpression * FlagExpression\
-&emsp;               | NumericalExpression ? NumericalExpression\
+&emsp;               | NumericalExpression ? NumericalExpression
 ___
 
 Language Features:\
@@ -67,4 +67,4 @@ The ? symbol represents greater than or equal to. It is the only comparator oper
 \
 When statements will execute if the flag is up, if not the body is skipped.\
 \
-We end all statements with a smiley face :) because we are happy to write code.\
+We end all statements with a smiley face :) because we are happy to write code.
