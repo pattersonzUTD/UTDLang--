@@ -1,37 +1,108 @@
 
 import java_cup.runtime.*;
 
-terminal START;    //2
-terminal END;      //3
-terminal ID;       //4
-terminal IN;       //5
-terminal OUT;      //6
-terminal LPAREN;   //7
-terminal RPAREN;   //8
-terminal COLON;    //9
-terminal NUMBER;   //10
-terminal STRING;   //11
-terminal FLAG;     //12
-terminal MAIN;     //14
-terminal SMILE;    //15
-terminal ASSIGN;   //16
-terminal READ;     //17
-terminal WRITE;    //18
-terminal CALL;     //19
-terminal WHEN;     //20
-terminal DO;       //21
-terminal DONE;     //22
-terminal NUMBERLIT;//23
-terminal PLUS;     //24
-terminal MINUS;    //25
-terminal MULTIPLY; //26
-terminal DIVIDE;   //27
-terminal STRINGLIT;//28
-terminal UP;       //29
-terminal DOWN;     //30
-terminal FLIP;     //31
-terminal QUESTION; //32
+terminal START;    
+terminal END;      
+terminal IN;       
+terminal OUT;      
+terminal LPAREN;   
+terminal RPAREN;   
+terminal COLON;    
+terminal NUMBER;   
+terminal STRING;   
+terminal FLAG;     
+terminal MAIN;     
+terminal SMILE;    
+terminal ASSIGN;   
+terminal READ;     
+terminal WRITE;    
+terminal CALL;     
+terminal WHEN;     
+terminal DO;       
+terminal DONE;     
+terminal PLUS;     
+terminal MINUS;    
+terminal MULTIPLY; 
+terminal DIVIDE;   
+terminal UP;       
+terminal DOWN;     
+terminal FLIP;     
+terminal QUESTION; 
 
+terminal String ID;    
+terminal int NUMBERLIT;
+terminal String STRINGLIT;
 
-non terminal dummy;
-dummy ::= ;
+non terminal Program program;
+non terminal Expr expression;
+non terminal NumExpr numericalExpression;
+non terminal FlagExpr flagExpression;
+non terminal StrExpr stringExpression;
+
+precedence left PLUS, MINUS;
+precedence left MULTIPLY, DIVIDE;
+
+program ::= expression:e
+	{: RESULT = new Program(e); :}
+  ;
+
+expression ::= numericalExpression:n
+           {: RESULT = n; :}
+           |
+           stringExpression:s
+           {: RESULT = s; :}
+           |
+           flagExpression:f
+           {: RESULT = f; :}
+           ;
+
+numericalExpression ::= NUMBERLIT:n
+  {: RESULT = new NumExpr(n); :} 
+	|
+	ID:i
+	{: RESULT = new NumExpr(i); :}
+  |
+  numericalExpression:n1 PLUS numericalExpression:n2
+  {: RESULT = new NumExpr(n1, "+", n2); :}
+  |
+  numericalExpression:n1 MINUS numericalExpression:n2
+  {: RESULT = new NumExpr(n1, "-", n2); :}
+  |
+  numericalExpression:n1 MULTIPLY numericalExpression:n2
+  {: RESULT = new NumExpr(n1, "*", n2); :}
+  |
+  numericalExpression:n1 DIVIDE numericalExpression:n2
+  {: RESULT = new NumExpr(n1, "/", n2); :}
+	;
+
+flagExpression ::= UP
+	{: RESULT = new FlagExpr(true); :} 
+	|
+	DOWN
+	{: RESULT = new FlagExpr(false); :}
+  |
+  ID:i
+	{: RESULT = new FlagExpr(i); :}
+  |
+  FLIP flagExpression:f1
+  {: RESULT = new FlagExpr(f1):}
+  |
+  flagExpression:f1 PLUS flagExpression:f2
+  {: RESULT = new FlagExpr(f1, "+", f2); :}
+  |
+  flagExpression:f1 MULTIPLY flagExpression:f2
+  {: RESULT = new FlagExpr(f1, "*", f2); :}
+  |
+  numericalExpression:n1  QUESTION numericalExpression:n2
+  {: RESULT = new FlagExpr(n1, "?", n2); :}
+	;
+
+stringExpression ::= STRINGLIT:s
+	{: RESULT = new StrExpr(s); :} 
+	|
+	ID:i
+	{: RESULT = new StrExpr(i); :}
+  |
+  stringExpression:s1 PLUS stringExpression:s2
+  {: RESULT = new StrExpr(s1, s2); :}
+	;

@@ -12,17 +12,23 @@ default: run
 .java.class:
 		$(JAVAC) -cp $(CP) $*.java
 
-FILE=    Lexer.java      parser.java    sym.java \
-    LexerTest.java
+FILE=    Lexer.java parser.java sym.java\
+	LexerTest.java ScannerTest.java Token.java Program.java NumExpr.java\
+	StrExpr.java FlagExpr.java Expr.java
 
-run: sampleFile.utd
+run: sampleFile1.utd sampleFile2.utd
 
 all: Lexer.java parser.java $(FILE:java=class)
 
-sampleFile.utd: all
-		$(JAVA) -cp $(CP) LexerTest sampleFile.utd > sampleFile-output.txt
-		cat sampleFile.utd
-		cat -n sampleFile-output.txt
+sampleFile1.utd: all
+		$(JAVA) -cp $(CP) ScannerTest sampleFile1.utd > sampleFile1-output.txt
+		cat sampleFile1.utd
+		cat -n sampleFile1-output.txt
+
+sampleFile2.utd: all
+		$(JAVA) -cp $(CP) ScannerTest sampleFile2.utd > sampleFile2-output.txt
+		cat sampleFile2.utd
+		cat -n sampleFile2-output.txt
 
 clean:
 		rm -f *.class *~ *.bak Lexer.java parser.java sym.java
