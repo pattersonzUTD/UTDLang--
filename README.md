@@ -21,7 +21,7 @@ Variables := Variable Variables\
 &emsp;          | λ\
 Variable := ID ( Type ) :)\
 Statements := Statement Statements\
-&emsp;           | λ\ 
+&emsp;           | λ\
 Statement := ID <- Expression :)\
 &emsp;          | read ( ID ) :)\
 &emsp;          | write ( ID ) :)\
@@ -31,7 +31,7 @@ IdList := ID IdList\
 &emsp;         | λ\
 Expression := NumericalExpression\
 &emsp;           | StringExpression\
-&emsp;           | FlagExpression
+&emsp;           | FlagExpression\
 NumericalExpression := NUMBER\
 &emsp;                    | ID\
 &emsp;                    | NumericalExpression + NumericalExpression\
@@ -47,7 +47,7 @@ FlagExpression := up\
 &emsp;               | flip FlagExpression\
 &emsp;               | FlagExpression + FlagExpression\
 &emsp;               | FlagExpression * FlagExpression\
-&emsp;               | NumericalExpression ? NumericalExpression\
+&emsp;               | NumericalExpression ? NumericalExpression
 ___
 
 Language Features:\
@@ -55,7 +55,7 @@ Language Features:\
 IDs are strictly numerical characters, upper or lower case is fine\
 \
 Strings start with a " and end with a ", they cannot contain any new lines or tab characters\
-To include a " character, it can be escaped with \", Similarly, \ can be escaped with \\ \
+To include a " character, it can be escaped with \\", Similarly, \\ can be escaped with \\\\ \
 When two strings are added together, it concatenates them.\
 \
 Numbers are strictly integers, when division occurs, values are truncated\
@@ -67,4 +67,4 @@ The ? symbol represents greater than or equal to. It is the only comparator oper
 \
 When statements will execute if the flag is up, if not the body is skipped.\
 \
-We end all statements with a smiley face :) because we are happy to write code.\
+We end all statements with a smiley face :) because we are happy to write code.
