@@ -14,9 +14,9 @@ default: run
 
 FILE=    Lexer.java parser.java sym.java\
 	LexerTest.java ScannerTest.java Token.java Program.java BinExpr.java\
-	UnaryExpr.java OperandExpr.java StatementList.java Statement.java\
+	UnaryExpr.java OperandExpr.java Statement.java\
 	AssignmentStmt.java ReadStmt.java WriteStmt.java CallStmt.java WhenStmt.java\
-	IDList.java Type.java Body.java VariableList.java Variable.java
+	IDList.java Body.java VarStmtList.java Variable.java
 
 run: sampleFile1.utd sampleFile2.utd
 

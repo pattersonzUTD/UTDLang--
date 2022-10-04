@@ -38,13 +38,13 @@ non terminal Program program;
 non terminal Expr binaryExpression;
 non terminal Expr unaryExpression;
 non terminal OperandExpr operandExpression;
-non terminal String statements;
-//non terminal Statement statement;
 non terminal IDList idList;
 non terminal String type;
-//non terminal Variable variable;
-non terminal String variables;
-non terminal String body;
+non terminal VarStmtList varAndStatementList;
+non terminal VarStmtList statements;
+non terminal Statement statement;
+non terminal Variable variable;
+non terminal Body body;
 
 precedence left PLUS, MINUS;
 precedence left MULTIPLY, DIVIDE;
@@ -54,28 +54,46 @@ program ::= body:b
         {: RESULT = new Program(b); :}
         ;
 
-body ::= ID:i LPAREN type:t RPAREN SMILE body:b
-     {: RESULT = ""; :}
-     |
-     ID:i ASSIGN binaryExpression:be SMILE body:b
-     {: RESULT = ""; :}
-     |
-     READ LPAREN ID:i RPAREN SMILE body:b
-     {: RESULT = ""; :}
-     |
-     WRITE LPAREN ID:i RPAREN SMILE body:b
-     {: RESULT = ""; :}
-     |
-     CALL ID:i LPAREN idList:is RPAREN SMILE body:b
-     {: RESULT = ""; :}
-     |
-     WHEN binaryExpression:be DO body:bb DONE SMILE body:b
-     {: RESULT = ""; :}
-     |
-     {: RESULT = ""; :}
+body ::= varAndStatementList:v
+     {: RESULT = new Body(v); :}
      ;
-         
-Type ::= NUMBER:n
+
+varAndStatementList ::= variable:v varAndStatementList:isl
+                   {: RESULT = isl.prepend(v); :}
+                   |
+                   statement:s statements:ss
+                   {: RESULT = ss.prepend(s); :}
+                   |
+                   {: RESULT = new VarStmtList(); :}
+                   ;
+
+variable ::= ID:i LPAREN type:t RPAREN SMILE
+         {: RESULT = new Variable(i,t); :}
+         ;
+
+statements ::= statement:s statements:ss
+           {: RESULT = ss.prepend(s); :}
+           |
+           {: RESULT = new VarStmtList(); :}
+           ;
+
+statement ::= ID:i ASSIGN binaryExpression:b SMILE
+          {: RESULT = new AssignmentStmt(i,b); :}
+          |
+          READ LPAREN ID:i RPAREN SMILE
+          {: RESULT = new ReadStmt(i); :}
+          |
+          WRITE LPAREN ID:i RPAREN SMILE
+          {: RESULT = new WriteStmt(i); :}
+          |
+          CALL ID:i LPAREN idList:is RPAREN SMILE
+          {: RESULT = new CallStmt(i, is); :}
+          |
+          WHEN binaryExpression:b DO statements:s DONE SMILE
+          {: RESULT = new WhenStmt(b,s); :}
+          ;
+          
+type ::= NUMBER:n
      {: RESULT = n; :}
      |
      STRING:s

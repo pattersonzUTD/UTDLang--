@@ -1,3 +1,8 @@
+num (number) :)
+guess (number) :)
+guessPP (number) :)
+approx (flag) :)
+strTest (string) :)
      call nextGuess (num) :)
      call guessPP (num) :)
      when guess * guess ? value do

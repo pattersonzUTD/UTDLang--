@@ -1,4 +1,4 @@
-class Variable extends Token {
+class Variable extends Statement {
   String id;
   String type;
   

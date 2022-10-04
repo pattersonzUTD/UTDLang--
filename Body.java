@@ -1,13 +1,11 @@
 class Body extends Token {
-  private VariableList variables;
-  private StatementList statements;
+  private VarStmtList stmtVar;
 
-  public Body(VariableList v, StatementList s) {
-    variables = v;
-    statements = s;
+  public Body(VarStmtList v) {
+    stmtVar = v;
   }
 
   public String toString(int t) {
-    return getTabs(t) + "Body:\n" + variables.toString(t+1) + statements.toString(t+1);
+    return getTabs(t) + "Body:\n" + stmtVar.toString(t+1);
   }
 }

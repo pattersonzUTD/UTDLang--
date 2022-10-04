@@ -1,8 +1,8 @@
 class WhenStmt extends Statement {
   Expr cond;
-  StatementList statements;
+  VarStmtList statements;
   
-  public WhenStmt(Expr c, StatementList s) {
+  public WhenStmt(Expr c, VarStmtList s) {
     cond = c;
     statements = s;
   }
