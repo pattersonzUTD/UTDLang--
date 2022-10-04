@@ -37,14 +37,46 @@ non terminal Program program;
 non terminal Expr binaryExpression;
 non terminal Expr unaryExpression;
 non terminal OperandExpr operandExpression;
+non terminal StatementList statements;
+non terminal Statement statement;
+non terminal IDList idList;
 
 precedence left PLUS, MINUS;
 precedence left MULTIPLY, DIVIDE;
 precedence left QUESTION;
 
-program ::= binaryExpression:e
-	{: RESULT = new Program(e); :}
-  ;
+program ::= statements:s
+        {: RESULT = new Program(s); :}
+        ;
+        
+statements ::= statement:s statements:ss
+           {: RESULT = ss.prependStatement(s); :}
+           |
+           {: RESULT = new StatementList(); :}
+           ;
+
+statement ::= ID:i ASSIGN binaryExpression:b SMILE
+          {: RESULT = new AssignmentStmt(i,b); :}
+          |
+          READ LPAREN ID:i RPAREN SMILE
+          {: RESULT = new ReadStmt(i); :}
+          |
+          WRITE LPAREN ID:i RPAREN SMILE
+          {: RESULT = new WriteStmt(i); :}
+          |
+          CALL ID:i LPAREN idList:is RPAREN SMILE
+          {: RESULT = new CallStmt(i, is); :}
+          |
+          WHEN binaryExpression:b DO statements:s DONE SMILE
+          {: RESULT = new WhenStmt(b,s); :}
+          ;
+          
+idList ::= ID:i idList:is
+       {: RESULT = is.prependID(i); :}
+       |
+       {: RESULT = new IDList(); :}
+       ;
+
 
 binaryExpression ::= unaryExpression:u
                  {: RESULT = u; :}

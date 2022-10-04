@@ -1,2 +1,19 @@
 Program:
-	(((strLit:"string" * flag:true) / (flag:false ? var:var)) + number:8)
+	call nextGuess(num ) :)
+	call guessPP(num ) :)
+	when (var:guess * (var:guess ? var:value)) do
+		nextGuess <- (var:guess - number:1) :)
+		call sqrtLoop(value nextGuess result approx ) :)
+	done :)
+	guessPP <- (var:guess + number:1) :)
+	when (((var:value ? var:guess) * var:guess) * flip((var:guessPP * (var:guessPP ? var:value)))) do
+		call sqrtLoop(value guessPP result ) :)
+	done :)
+	when ((((var:value ? var:guess) * var:guess) * var:guessPP) * (var:guessPP ? var:value)) do
+		result <- var:guess :)
+		approx <- flag:true :)
+		when (var:guess * (var:guess ? var:value)) do
+			approx <- flag:false :)
+		done :)
+	done :)
+

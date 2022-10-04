@@ -1,2 +1,13 @@
 Program:
-	(var:varId + (number:5 * flip(((number:6 / number:7) - number:2))))
+	a <- number:5 :)
+	b <- (var:a + number:10) :)
+	c <- flag:true :)
+	d <- flip(var:c) :)
+	write(a) :)
+	read(b) :)
+	call e(a b c ) :)
+	call f() :)
+	when (var:c ? var:d) do
+		a <- number:20 :)
+	done :)
+

@@ -1,1 +1,20 @@
-"string" * up / down ? var + 8
+     call nextGuess (num) :)
+     call guessPP (num) :)
+     when guess * guess ? value do
+          nextGuess <- guess - 1 :)
+          call sqrtLoop(value nextGuess result approx) :)
+     done :)
+
+     guessPP <- guess + 1 :)
+
+     when value ? guess * guess * flip guessPP * guessPP ? value do
+          call sqrtLoop(value guessPP result) :)
+     done :)
+
+     when value ? guess * guess * guessPP * guessPP ? value do
+          result <- guess :)
+          approx <- up :)
+          when guess * guess ? value do
+               approx <- down :)
+          done :)
+     done :)
