@@ -3,7 +3,7 @@ class Body extends Token {
   private StatementList statements;
 
   public Body(VariableList v, StatementList s) {
-    varibles = v;
+    variables = v;
     statements = s;
   }
 

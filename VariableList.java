@@ -2,7 +2,7 @@ import java.util.List;
 import java.util.LinkedList;
 
 class VariableList extends Token {
-  private List<Variable> variabless;
+  private List<Variable> variables;
   
   public VariableList() {
     variables = new LinkedList<Variable>();
