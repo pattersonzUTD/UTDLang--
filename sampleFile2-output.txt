@@ -1,2 +1,2 @@
 Program:
-	1234
+	(((strLit:"string" * flag:true) / (flag:false ? var:var)) + number:8)

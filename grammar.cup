@@ -34,75 +34,56 @@ terminal int NUMBERLIT;
 terminal String STRINGLIT;
 
 non terminal Program program;
-non terminal Expr expression;
-non terminal NumExpr numericalExpression;
-non terminal FlagExpr flagExpression;
-non terminal StrExpr stringExpression;
+non terminal Expr binaryExpression;
+non terminal Expr unaryExpression;
+non terminal OperandExpr operandExpression;
 
 precedence left PLUS, MINUS;
 precedence left MULTIPLY, DIVIDE;
+precedence left QUESTION;
 
-program ::= expression:e
+program ::= binaryExpression:e
 	{: RESULT = new Program(e); :}
   ;
 
-expression ::= numericalExpression:n
-           {: RESULT = n; :}
-           |
-           stringExpression:s
-           {: RESULT = s; :}
-           |
-           flagExpression:f
-           {: RESULT = f; :}
-           ;
+binaryExpression ::= unaryExpression:u
+                 {: RESULT = u; :}
+                 |
+                 binaryExpression:b1 PLUS binaryExpression:b2
+                 {: RESULT = new BinExpr(b1, "+", b2); :}
+                 |
+                 binaryExpression:b1 MINUS binaryExpression:b2
+                 {: RESULT = new BinExpr(b1, "-", b2); :}
+                 |
+                 binaryExpression:b1 MULTIPLY binaryExpression:b2
+                 {: RESULT = new BinExpr(b1, "*", b2); :}
+                 |
+                 binaryExpression:b1 DIVIDE binaryExpression:b2
+                 {: RESULT = new BinExpr(b1, "/", b2); :}
+                 |
+                 binaryExpression:b1 QUESTION binaryExpression:b2
+                 {: RESULT = new BinExpr(b1, "?", b2); :}
+                 ;
 
-numericalExpression ::= NUMBERLIT:n
-  {: RESULT = new NumExpr(n); :} 
-	|
-	ID:i
-	{: RESULT = new NumExpr(i); :}
-  |
-  numericalExpression:n1 PLUS numericalExpression:n2
-  {: RESULT = new NumExpr(n1, "+", n2); :}
-  |
-  numericalExpression:n1 MINUS numericalExpression:n2
-  {: RESULT = new NumExpr(n1, "-", n2); :}
-  |
-  numericalExpression:n1 MULTIPLY numericalExpression:n2
-  {: RESULT = new NumExpr(n1, "*", n2); :}
-  |
-  numericalExpression:n1 DIVIDE numericalExpression:n2
-  {: RESULT = new NumExpr(n1, "/", n2); :}
-	;
+unaryExpression ::= operandExpression:o
+                {: RESULT = o; :}
+                |
+                FLIP binaryExpression:b
+                {: RESULT = new UnaryExpr("flip", b); :}
+                ;
 
-flagExpression ::= UP
-	{: RESULT = new FlagExpr(true); :} 
-	|
-	DOWN
-	{: RESULT = new FlagExpr(false); :}
-  |
-  ID:i
-	{: RESULT = new FlagExpr(i); :}
-  |
-  FLIP flagExpression:f1
-  {: RESULT = new FlagExpr(f1):}
-  |
-  flagExpression:f1 PLUS flagExpression:f2
-  {: RESULT = new FlagExpr(f1, "+", f2); :}
-  |
-  flagExpression:f1 MULTIPLY flagExpression:f2
-  {: RESULT = new FlagExpr(f1, "*", f2); :}
-  |
-  numericalExpression:n1  QUESTION numericalExpression:n2
-  {: RESULT = new FlagExpr(n1, "?", n2); :}
-	;
-
-stringExpression ::= STRINGLIT:s
-	{: RESULT = new StrExpr(s); :} 
-	|
-	ID:i
-	{: RESULT = new StrExpr(i); :}
-  |
-  stringExpression:s1 PLUS stringExpression:s2
-  {: RESULT = new StrExpr(s1, s2); :}
-	;
+operandExpression ::= ID:i
+                  {: RESULT = new OperandExpr(i, "var"); :}
+                  |
+                  UP
+                  {: RESULT = new OperandExpr(true); :}
+                  |
+                  DOWN
+                  {: RESULT = new OperandExpr(false); :}
+                  |
+                  NUMBERLIT:n
+                  {: RESULT = new OperandExpr(n); :}
+                  |
+                  STRINGLIT:s
+                  {: RESULT = new OperandExpr(s, "strLit"); :}
+                  ;

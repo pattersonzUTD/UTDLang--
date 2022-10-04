@@ -13,8 +13,8 @@ default: run
 		$(JAVAC) -cp $(CP) $*.java
 
 FILE=    Lexer.java parser.java sym.java\
-	LexerTest.java ScannerTest.java Token.java Program.java NumExpr.java\
-	StrExpr.java FlagExpr.java Expr.java
+	LexerTest.java ScannerTest.java Token.java Program.java BinExpr.java\
+	UnaryExpr.java OperandExpr.java
 
 run: sampleFile1.utd sampleFile2.utd
 
