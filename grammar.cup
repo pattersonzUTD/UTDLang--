@@ -8,9 +8,6 @@ terminal OUT;
 terminal LPAREN;   
 terminal RPAREN;   
 terminal COLON;    
-terminal NUMBER;   
-terminal STRING;   
-terminal FLAG;     
 terminal MAIN;     
 terminal SMILE;    
 terminal ASSIGN;   
@@ -29,6 +26,10 @@ terminal DOWN;
 terminal FLIP;     
 terminal QUESTION; 
 
+terminal String NUMBER;   
+terminal String STRING;   
+terminal String FLAG;     
+
 terminal String ID;    
 terminal int NUMBERLIT;
 terminal String STRINGLIT;
@@ -40,15 +41,43 @@ non terminal OperandExpr operandExpression;
 non terminal StatementList statements;
 non terminal Statement statement;
 non terminal IDList idList;
+non terminal String type;
+non terminal Variable variable;
+non terminal VariableList variables;
+non terminal Body body;
 
 precedence left PLUS, MINUS;
 precedence left MULTIPLY, DIVIDE;
 precedence left QUESTION;
 
-program ::= statements:s
-        {: RESULT = new Program(s); :}
+program ::= body:b
+        {: RESULT = new Program(b); :}
         ;
         
+body ::= variables:v statements:s
+     {: RESULT = new Body(v,s); :}
+     ;
+
+variables ::= variable:v variables:vs
+          {: RESULT = vs.prependVariable(v); :}
+          |
+          {: RESULT = new VariableList(); :}
+          ;
+
+variable ::= ID:i LPAREN type:t RPAREN SMILE
+         {: RESULT = new Variable(i,t); :}
+         ;
+         
+Type ::= NUMBER:n
+     {: RESULT = n; :}
+     |
+     STRING:s
+     {: RESULT = s; :}
+     |
+     FLAG:f
+     {: RESULT = f; :}
+     ;
+     
 statements ::= statement:s statements:ss
            {: RESULT = ss.prependStatement(s); :}
            |

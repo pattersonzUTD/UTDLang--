@@ -1,0 +1,733 @@
+Warning : LHS non terminal "Type" has not been declared
+Warning : Terminal "FLAG" was declared but never used
+Warning : Terminal "IN" was declared but never used
+Warning : Terminal "END" was declared but never used
+Warning : Terminal "COLON" was declared but never used
+Warning : Terminal "STRING" was declared but never used
+Warning : Terminal "NUMBER" was declared but never used
+Warning : Terminal "MAIN" was declared but never used
+Warning : Terminal "START" was declared but never used
+Warning : Terminal "OUT" was declared but never used
+Warning : *** Shift/Reduce conflict found in state #4
+  between variables ::= (*) 
+  and     variable ::= (*) ID LPAREN type RPAREN SMILE 
+  under symbol ID
+  Resolved in favor of shifting.
+
+Warning : *** Shift/Reduce conflict found in state #0
+  between variables ::= (*) 
+  and     variable ::= (*) ID LPAREN type RPAREN SMILE 
+  under symbol ID
+  Resolved in favor of shifting.
+
+Error : *** More conflicts encountered than expected -- parser generation aborted
+===== Terminals =====
+[0]EOF [1]error [2]START [3]END [4]IN 
+[5]OUT [6]LPAREN [7]RPAREN [8]COLON [9]MAIN 
+[10]SMILE [11]ASSIGN [12]READ [13]WRITE [14]CALL 
+[15]WHEN [16]DO [17]DONE [18]PLUS [19]MINUS 
+[20]MULTIPLY [21]DIVIDE [22]UP [23]DOWN [24]FLIP 
+[25]QUESTION [26]NUMBER [27]STRING [28]FLAG [29]ID 
+[30]NUMBERLIT [31]STRINGLIT 
+
+===== Non terminals =====
+[0]program [1]binaryExpression [2]unaryExpression [3]operandExpression [4]statements 
+[5]statement [6]idList [7]type [8]variable [9]variables 
+[10]body 
+
+===== Productions =====
+[0] program ::= body 
+[1] $START ::= program EOF 
+[2] body ::= variables statements 
+[3] variables ::= variable variables 
+[4] variables ::= 
+[5] variable ::= ID LPAREN type RPAREN SMILE 
+[6] statements ::= statement statements 
+[7] statements ::= 
+[8] statement ::= ID ASSIGN binaryExpression SMILE 
+[9] statement ::= READ LPAREN ID RPAREN SMILE 
+[10] statement ::= WRITE LPAREN ID RPAREN SMILE 
+[11] statement ::= CALL ID LPAREN idList RPAREN SMILE 
+[12] statement ::= WHEN binaryExpression DO statements DONE SMILE 
+[13] idList ::= ID idList 
+[14] idList ::= 
+[15] binaryExpression ::= unaryExpression 
+[16] binaryExpression ::= binaryExpression PLUS binaryExpression 
+[17] binaryExpression ::= binaryExpression MINUS binaryExpression 
+[18] binaryExpression ::= binaryExpression MULTIPLY binaryExpression 
+[19] binaryExpression ::= binaryExpression DIVIDE binaryExpression 
+[20] binaryExpression ::= binaryExpression QUESTION binaryExpression 
+[21] unaryExpression ::= operandExpression 
+[22] unaryExpression ::= FLIP binaryExpression 
+[23] operandExpression ::= ID 
+[24] operandExpression ::= UP 
+[25] operandExpression ::= DOWN 
+[26] operandExpression ::= NUMBERLIT 
+[27] operandExpression ::= STRINGLIT 
+
+===== Viable Prefix Recognizer =====
+START lalr_state [0]: {
+  [variable ::= (*) ID LPAREN type RPAREN SMILE , {EOF READ WRITE CALL WHEN ID }]
+  [body ::= (*) variables statements , {EOF }]
+  [variables ::= (*) , {EOF READ WRITE CALL WHEN ID }]
+  [$START ::= (*) program EOF , {EOF }]
+  [variables ::= (*) variable variables , {EOF READ WRITE CALL WHEN ID }]
+  [program ::= (*) body , {EOF }]
+}
+transition on variables to state [5]
+transition on variable to state [4]
+transition on program to state [3]
+transition on ID to state [2]
+transition on body to state [1]
+
+-------------------
+lalr_state [1]: {
+  [program ::= body (*) , {EOF }]
+}
+
+-------------------
+lalr_state [2]: {
+  [variable ::= ID (*) LPAREN type RPAREN SMILE , {EOF READ WRITE CALL WHEN ID }]
+}
+transition on LPAREN to state [58]
+
+-------------------
+lalr_state [3]: {
+  [$START ::= program (*) EOF , {EOF }]
+}
+transition on EOF to state [57]
+
+-------------------
+lalr_state [4]: {
+  [variable ::= (*) ID LPAREN type RPAREN SMILE , {EOF READ WRITE CALL WHEN ID }]
+  [variables ::= (*) , {EOF READ WRITE CALL WHEN ID }]
+  [variables ::= variable (*) variables , {EOF READ WRITE CALL WHEN ID }]
+  [variables ::= (*) variable variables , {EOF READ WRITE CALL WHEN ID }]
+}
+transition on variables to state [56]
+transition on variable to state [4]
+transition on ID to state [2]
+
+-------------------
+lalr_state [5]: {
+  [statement ::= (*) ID ASSIGN binaryExpression SMILE , {EOF READ WRITE CALL WHEN ID }]
+  [body ::= variables (*) statements , {EOF }]
+  [statement ::= (*) WRITE LPAREN ID RPAREN SMILE , {EOF READ WRITE CALL WHEN ID }]
+  [statements ::= (*) , {EOF }]
+  [statement ::= (*) WHEN binaryExpression DO statements DONE SMILE , {EOF READ WRITE CALL WHEN ID }]
+  [statement ::= (*) READ LPAREN ID RPAREN SMILE , {EOF READ WRITE CALL WHEN ID }]
+  [statements ::= (*) statement statements , {EOF }]
+  [statement ::= (*) CALL ID LPAREN idList RPAREN SMILE , {EOF READ WRITE CALL WHEN ID }]
+}
+transition on CALL to state [12]
+transition on statement to state [11]
+transition on WRITE to state [10]
+transition on WHEN to state [9]
+transition on statements to state [8]
+transition on READ to state [7]
+transition on ID to state [6]
+
+-------------------
+lalr_state [6]: {
+  [statement ::= ID (*) ASSIGN binaryExpression SMILE , {EOF READ WRITE CALL WHEN DONE ID }]
+}
+transition on ASSIGN to state [53]
+
+-------------------
+lalr_state [7]: {
+  [statement ::= READ (*) LPAREN ID RPAREN SMILE , {EOF READ WRITE CALL WHEN DONE ID }]
+}
+transition on LPAREN to state [49]
+
+-------------------
+lalr_state [8]: {
+  [body ::= variables statements (*) , {EOF }]
+}
+
+-------------------
+lalr_state [9]: {
+  [binaryExpression ::= (*) binaryExpression QUESTION binaryExpression , {DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= (*) binaryExpression MINUS binaryExpression , {DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [operandExpression ::= (*) DOWN , {DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [unaryExpression ::= (*) FLIP binaryExpression , {DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= (*) binaryExpression DIVIDE binaryExpression , {DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= (*) binaryExpression PLUS binaryExpression , {DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [operandExpression ::= (*) STRINGLIT , {DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [operandExpression ::= (*) UP , {DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [unaryExpression ::= (*) operandExpression , {DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= (*) binaryExpression MULTIPLY binaryExpression , {DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [statement ::= WHEN (*) binaryExpression DO statements DONE SMILE , {EOF READ WRITE CALL WHEN DONE ID }]
+  [binaryExpression ::= (*) unaryExpression , {DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [operandExpression ::= (*) NUMBERLIT , {DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [operandExpression ::= (*) ID , {DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+}
+transition on operandExpression to state [33]
+transition on binaryExpression to state [32]
+transition on UP to state [31]
+transition on STRINGLIT to state [30]
+transition on DOWN to state [29]
+transition on unaryExpression to state [28]
+transition on NUMBERLIT to state [27]
+transition on ID to state [26]
+transition on FLIP to state [25]
+
+-------------------
+lalr_state [10]: {
+  [statement ::= WRITE (*) LPAREN ID RPAREN SMILE , {EOF READ WRITE CALL WHEN DONE ID }]
+}
+transition on LPAREN to state [21]
+
+-------------------
+lalr_state [11]: {
+  [statement ::= (*) ID ASSIGN binaryExpression SMILE , {EOF READ WRITE CALL WHEN DONE ID }]
+  [statement ::= (*) WRITE LPAREN ID RPAREN SMILE , {EOF READ WRITE CALL WHEN DONE ID }]
+  [statements ::= (*) , {EOF DONE }]
+  [statement ::= (*) WHEN binaryExpression DO statements DONE SMILE , {EOF READ WRITE CALL WHEN DONE ID }]
+  [statement ::= (*) READ LPAREN ID RPAREN SMILE , {EOF READ WRITE CALL WHEN DONE ID }]
+  [statements ::= statement (*) statements , {EOF DONE }]
+  [statements ::= (*) statement statements , {EOF DONE }]
+  [statement ::= (*) CALL ID LPAREN idList RPAREN SMILE , {EOF READ WRITE CALL WHEN DONE ID }]
+}
+transition on CALL to state [12]
+transition on statement to state [11]
+transition on WRITE to state [10]
+transition on WHEN to state [9]
+transition on statements to state [20]
+transition on READ to state [7]
+transition on ID to state [6]
+
+-------------------
+lalr_state [12]: {
+  [statement ::= CALL (*) ID LPAREN idList RPAREN SMILE , {EOF READ WRITE CALL WHEN DONE ID }]
+}
+transition on ID to state [13]
+
+-------------------
+lalr_state [13]: {
+  [statement ::= CALL ID (*) LPAREN idList RPAREN SMILE , {EOF READ WRITE CALL WHEN DONE ID }]
+}
+transition on LPAREN to state [14]
+
+-------------------
+lalr_state [14]: {
+  [idList ::= (*) ID idList , {RPAREN }]
+  [statement ::= CALL ID LPAREN (*) idList RPAREN SMILE , {EOF READ WRITE CALL WHEN DONE ID }]
+  [idList ::= (*) , {RPAREN }]
+}
+transition on idList to state [16]
+transition on ID to state [15]
+
+-------------------
+lalr_state [15]: {
+  [idList ::= ID (*) idList , {RPAREN }]
+  [idList ::= (*) ID idList , {RPAREN }]
+  [idList ::= (*) , {RPAREN }]
+}
+transition on idList to state [19]
+transition on ID to state [15]
+
+-------------------
+lalr_state [16]: {
+  [statement ::= CALL ID LPAREN idList (*) RPAREN SMILE , {EOF READ WRITE CALL WHEN DONE ID }]
+}
+transition on RPAREN to state [17]
+
+-------------------
+lalr_state [17]: {
+  [statement ::= CALL ID LPAREN idList RPAREN (*) SMILE , {EOF READ WRITE CALL WHEN DONE ID }]
+}
+transition on SMILE to state [18]
+
+-------------------
+lalr_state [18]: {
+  [statement ::= CALL ID LPAREN idList RPAREN SMILE (*) , {EOF READ WRITE CALL WHEN DONE ID }]
+}
+
+-------------------
+lalr_state [19]: {
+  [idList ::= ID idList (*) , {RPAREN }]
+}
+
+-------------------
+lalr_state [20]: {
+  [statements ::= statement statements (*) , {EOF DONE }]
+}
+
+-------------------
+lalr_state [21]: {
+  [statement ::= WRITE LPAREN (*) ID RPAREN SMILE , {EOF READ WRITE CALL WHEN DONE ID }]
+}
+transition on ID to state [22]
+
+-------------------
+lalr_state [22]: {
+  [statement ::= WRITE LPAREN ID (*) RPAREN SMILE , {EOF READ WRITE CALL WHEN DONE ID }]
+}
+transition on RPAREN to state [23]
+
+-------------------
+lalr_state [23]: {
+  [statement ::= WRITE LPAREN ID RPAREN (*) SMILE , {EOF READ WRITE CALL WHEN DONE ID }]
+}
+transition on SMILE to state [24]
+
+-------------------
+lalr_state [24]: {
+  [statement ::= WRITE LPAREN ID RPAREN SMILE (*) , {EOF READ WRITE CALL WHEN DONE ID }]
+}
+
+-------------------
+lalr_state [25]: {
+  [binaryExpression ::= (*) binaryExpression QUESTION binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= (*) binaryExpression MINUS binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [operandExpression ::= (*) DOWN , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [unaryExpression ::= FLIP (*) binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [unaryExpression ::= (*) FLIP binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= (*) binaryExpression DIVIDE binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= (*) binaryExpression PLUS binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [operandExpression ::= (*) STRINGLIT , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [operandExpression ::= (*) UP , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [unaryExpression ::= (*) operandExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= (*) binaryExpression MULTIPLY binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= (*) unaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [operandExpression ::= (*) NUMBERLIT , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [operandExpression ::= (*) ID , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+}
+transition on operandExpression to state [33]
+transition on binaryExpression to state [48]
+transition on UP to state [31]
+transition on STRINGLIT to state [30]
+transition on DOWN to state [29]
+transition on unaryExpression to state [28]
+transition on NUMBERLIT to state [27]
+transition on ID to state [26]
+transition on FLIP to state [25]
+
+-------------------
+lalr_state [26]: {
+  [operandExpression ::= ID (*) , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+}
+
+-------------------
+lalr_state [27]: {
+  [operandExpression ::= NUMBERLIT (*) , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+}
+
+-------------------
+lalr_state [28]: {
+  [binaryExpression ::= unaryExpression (*) , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+}
+
+-------------------
+lalr_state [29]: {
+  [operandExpression ::= DOWN (*) , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+}
+
+-------------------
+lalr_state [30]: {
+  [operandExpression ::= STRINGLIT (*) , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+}
+
+-------------------
+lalr_state [31]: {
+  [operandExpression ::= UP (*) , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+}
+
+-------------------
+lalr_state [32]: {
+  [binaryExpression ::= binaryExpression (*) PLUS binaryExpression , {DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= binaryExpression (*) MULTIPLY binaryExpression , {DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [statement ::= WHEN binaryExpression (*) DO statements DONE SMILE , {EOF READ WRITE CALL WHEN DONE ID }]
+  [binaryExpression ::= binaryExpression (*) QUESTION binaryExpression , {DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= binaryExpression (*) MINUS binaryExpression , {DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= binaryExpression (*) DIVIDE binaryExpression , {DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+}
+transition on MULTIPLY to state [39]
+transition on QUESTION to state [38]
+transition on DIVIDE to state [37]
+transition on MINUS to state [36]
+transition on PLUS to state [35]
+transition on DO to state [34]
+
+-------------------
+lalr_state [33]: {
+  [unaryExpression ::= operandExpression (*) , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+}
+
+-------------------
+lalr_state [34]: {
+  [statement ::= (*) ID ASSIGN binaryExpression SMILE , {READ WRITE CALL WHEN DONE ID }]
+  [statement ::= (*) WRITE LPAREN ID RPAREN SMILE , {READ WRITE CALL WHEN DONE ID }]
+  [statement ::= WHEN binaryExpression DO (*) statements DONE SMILE , {EOF READ WRITE CALL WHEN DONE ID }]
+  [statements ::= (*) , {DONE }]
+  [statement ::= (*) WHEN binaryExpression DO statements DONE SMILE , {READ WRITE CALL WHEN DONE ID }]
+  [statement ::= (*) READ LPAREN ID RPAREN SMILE , {READ WRITE CALL WHEN DONE ID }]
+  [statements ::= (*) statement statements , {DONE }]
+  [statement ::= (*) CALL ID LPAREN idList RPAREN SMILE , {READ WRITE CALL WHEN DONE ID }]
+}
+transition on CALL to state [12]
+transition on statement to state [11]
+transition on WRITE to state [10]
+transition on WHEN to state [9]
+transition on statements to state [45]
+transition on READ to state [7]
+transition on ID to state [6]
+
+-------------------
+lalr_state [35]: {
+  [binaryExpression ::= (*) binaryExpression QUESTION binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= (*) binaryExpression MINUS binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [operandExpression ::= (*) DOWN , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [unaryExpression ::= (*) FLIP binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= binaryExpression PLUS (*) binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= (*) binaryExpression DIVIDE binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= (*) binaryExpression PLUS binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [operandExpression ::= (*) STRINGLIT , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [operandExpression ::= (*) UP , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [unaryExpression ::= (*) operandExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= (*) binaryExpression MULTIPLY binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= (*) unaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [operandExpression ::= (*) NUMBERLIT , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [operandExpression ::= (*) ID , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+}
+transition on operandExpression to state [33]
+transition on binaryExpression to state [44]
+transition on UP to state [31]
+transition on STRINGLIT to state [30]
+transition on DOWN to state [29]
+transition on unaryExpression to state [28]
+transition on NUMBERLIT to state [27]
+transition on ID to state [26]
+transition on FLIP to state [25]
+
+-------------------
+lalr_state [36]: {
+  [binaryExpression ::= (*) binaryExpression QUESTION binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= (*) binaryExpression MINUS binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [operandExpression ::= (*) DOWN , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [unaryExpression ::= (*) FLIP binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= (*) binaryExpression DIVIDE binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= (*) binaryExpression PLUS binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [operandExpression ::= (*) STRINGLIT , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [operandExpression ::= (*) UP , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [unaryExpression ::= (*) operandExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= (*) binaryExpression MULTIPLY binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= (*) unaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [operandExpression ::= (*) NUMBERLIT , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [operandExpression ::= (*) ID , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= binaryExpression MINUS (*) binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+}
+transition on operandExpression to state [33]
+transition on binaryExpression to state [43]
+transition on UP to state [31]
+transition on STRINGLIT to state [30]
+transition on DOWN to state [29]
+transition on unaryExpression to state [28]
+transition on NUMBERLIT to state [27]
+transition on ID to state [26]
+transition on FLIP to state [25]
+
+-------------------
+lalr_state [37]: {
+  [binaryExpression ::= (*) binaryExpression QUESTION binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= (*) binaryExpression MINUS binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [operandExpression ::= (*) DOWN , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= binaryExpression DIVIDE (*) binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [unaryExpression ::= (*) FLIP binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= (*) binaryExpression DIVIDE binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= (*) binaryExpression PLUS binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [operandExpression ::= (*) STRINGLIT , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [operandExpression ::= (*) UP , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [unaryExpression ::= (*) operandExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= (*) binaryExpression MULTIPLY binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= (*) unaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [operandExpression ::= (*) NUMBERLIT , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [operandExpression ::= (*) ID , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+}
+transition on operandExpression to state [33]
+transition on binaryExpression to state [42]
+transition on UP to state [31]
+transition on STRINGLIT to state [30]
+transition on DOWN to state [29]
+transition on unaryExpression to state [28]
+transition on NUMBERLIT to state [27]
+transition on ID to state [26]
+transition on FLIP to state [25]
+
+-------------------
+lalr_state [38]: {
+  [binaryExpression ::= (*) binaryExpression QUESTION binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= (*) binaryExpression MINUS binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [operandExpression ::= (*) DOWN , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [unaryExpression ::= (*) FLIP binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= (*) binaryExpression DIVIDE binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= (*) binaryExpression PLUS binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [operandExpression ::= (*) STRINGLIT , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [operandExpression ::= (*) UP , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [unaryExpression ::= (*) operandExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= (*) binaryExpression MULTIPLY binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= (*) unaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [operandExpression ::= (*) NUMBERLIT , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= binaryExpression QUESTION (*) binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [operandExpression ::= (*) ID , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+}
+transition on operandExpression to state [33]
+transition on binaryExpression to state [41]
+transition on UP to state [31]
+transition on STRINGLIT to state [30]
+transition on DOWN to state [29]
+transition on unaryExpression to state [28]
+transition on NUMBERLIT to state [27]
+transition on ID to state [26]
+transition on FLIP to state [25]
+
+-------------------
+lalr_state [39]: {
+  [binaryExpression ::= (*) binaryExpression QUESTION binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= (*) binaryExpression MINUS binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [operandExpression ::= (*) DOWN , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [unaryExpression ::= (*) FLIP binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= (*) binaryExpression DIVIDE binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= (*) binaryExpression PLUS binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [operandExpression ::= (*) STRINGLIT , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [operandExpression ::= (*) UP , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= binaryExpression MULTIPLY (*) binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [unaryExpression ::= (*) operandExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= (*) binaryExpression MULTIPLY binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= (*) unaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [operandExpression ::= (*) NUMBERLIT , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [operandExpression ::= (*) ID , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+}
+transition on operandExpression to state [33]
+transition on binaryExpression to state [40]
+transition on UP to state [31]
+transition on STRINGLIT to state [30]
+transition on DOWN to state [29]
+transition on unaryExpression to state [28]
+transition on NUMBERLIT to state [27]
+transition on ID to state [26]
+transition on FLIP to state [25]
+
+-------------------
+lalr_state [40]: {
+  [binaryExpression ::= binaryExpression (*) PLUS binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= binaryExpression MULTIPLY binaryExpression (*) , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= binaryExpression (*) MULTIPLY binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= binaryExpression (*) QUESTION binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= binaryExpression (*) MINUS binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= binaryExpression (*) DIVIDE binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+}
+transition on MULTIPLY to state [39]
+transition on QUESTION to state [38]
+transition on DIVIDE to state [37]
+transition on MINUS to state [36]
+transition on PLUS to state [35]
+
+-------------------
+lalr_state [41]: {
+  [binaryExpression ::= binaryExpression (*) PLUS binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= binaryExpression (*) MULTIPLY binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= binaryExpression QUESTION binaryExpression (*) , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= binaryExpression (*) QUESTION binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= binaryExpression (*) MINUS binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= binaryExpression (*) DIVIDE binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+}
+transition on MULTIPLY to state [39]
+transition on QUESTION to state [38]
+transition on DIVIDE to state [37]
+transition on MINUS to state [36]
+transition on PLUS to state [35]
+
+-------------------
+lalr_state [42]: {
+  [binaryExpression ::= binaryExpression (*) PLUS binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= binaryExpression (*) MULTIPLY binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= binaryExpression (*) QUESTION binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= binaryExpression (*) MINUS binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= binaryExpression DIVIDE binaryExpression (*) , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= binaryExpression (*) DIVIDE binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+}
+transition on MULTIPLY to state [39]
+transition on QUESTION to state [38]
+transition on DIVIDE to state [37]
+transition on MINUS to state [36]
+transition on PLUS to state [35]
+
+-------------------
+lalr_state [43]: {
+  [binaryExpression ::= binaryExpression (*) PLUS binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= binaryExpression (*) MULTIPLY binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= binaryExpression MINUS binaryExpression (*) , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= binaryExpression (*) QUESTION binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= binaryExpression (*) MINUS binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= binaryExpression (*) DIVIDE binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+}
+transition on MULTIPLY to state [39]
+transition on QUESTION to state [38]
+transition on DIVIDE to state [37]
+transition on MINUS to state [36]
+transition on PLUS to state [35]
+
+-------------------
+lalr_state [44]: {
+  [binaryExpression ::= binaryExpression (*) PLUS binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= binaryExpression (*) MULTIPLY binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= binaryExpression (*) QUESTION binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= binaryExpression (*) MINUS binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= binaryExpression PLUS binaryExpression (*) , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= binaryExpression (*) DIVIDE binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+}
+transition on MULTIPLY to state [39]
+transition on QUESTION to state [38]
+transition on DIVIDE to state [37]
+transition on MINUS to state [36]
+transition on PLUS to state [35]
+
+-------------------
+lalr_state [45]: {
+  [statement ::= WHEN binaryExpression DO statements (*) DONE SMILE , {EOF READ WRITE CALL WHEN DONE ID }]
+}
+transition on DONE to state [46]
+
+-------------------
+lalr_state [46]: {
+  [statement ::= WHEN binaryExpression DO statements DONE (*) SMILE , {EOF READ WRITE CALL WHEN DONE ID }]
+}
+transition on SMILE to state [47]
+
+-------------------
+lalr_state [47]: {
+  [statement ::= WHEN binaryExpression DO statements DONE SMILE (*) , {EOF READ WRITE CALL WHEN DONE ID }]
+}
+
+-------------------
+lalr_state [48]: {
+  [binaryExpression ::= binaryExpression (*) PLUS binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= binaryExpression (*) MULTIPLY binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= binaryExpression (*) QUESTION binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= binaryExpression (*) MINUS binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [unaryExpression ::= FLIP binaryExpression (*) , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= binaryExpression (*) DIVIDE binaryExpression , {SMILE DO PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+}
+transition on MULTIPLY to state [39]
+transition on QUESTION to state [38]
+transition on DIVIDE to state [37]
+transition on MINUS to state [36]
+transition on PLUS to state [35]
+
+-------------------
+lalr_state [49]: {
+  [statement ::= READ LPAREN (*) ID RPAREN SMILE , {EOF READ WRITE CALL WHEN DONE ID }]
+}
+transition on ID to state [50]
+
+-------------------
+lalr_state [50]: {
+  [statement ::= READ LPAREN ID (*) RPAREN SMILE , {EOF READ WRITE CALL WHEN DONE ID }]
+}
+transition on RPAREN to state [51]
+
+-------------------
+lalr_state [51]: {
+  [statement ::= READ LPAREN ID RPAREN (*) SMILE , {EOF READ WRITE CALL WHEN DONE ID }]
+}
+transition on SMILE to state [52]
+
+-------------------
+lalr_state [52]: {
+  [statement ::= READ LPAREN ID RPAREN SMILE (*) , {EOF READ WRITE CALL WHEN DONE ID }]
+}
+
+-------------------
+lalr_state [53]: {
+  [binaryExpression ::= (*) binaryExpression QUESTION binaryExpression , {SMILE PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= (*) binaryExpression MINUS binaryExpression , {SMILE PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [statement ::= ID ASSIGN (*) binaryExpression SMILE , {EOF READ WRITE CALL WHEN DONE ID }]
+  [operandExpression ::= (*) DOWN , {SMILE PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [unaryExpression ::= (*) FLIP binaryExpression , {SMILE PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= (*) binaryExpression DIVIDE binaryExpression , {SMILE PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= (*) binaryExpression PLUS binaryExpression , {SMILE PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [operandExpression ::= (*) STRINGLIT , {SMILE PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [operandExpression ::= (*) UP , {SMILE PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [unaryExpression ::= (*) operandExpression , {SMILE PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= (*) binaryExpression MULTIPLY binaryExpression , {SMILE PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= (*) unaryExpression , {SMILE PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [operandExpression ::= (*) NUMBERLIT , {SMILE PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [operandExpression ::= (*) ID , {SMILE PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+}
+transition on operandExpression to state [33]
+transition on binaryExpression to state [54]
+transition on UP to state [31]
+transition on STRINGLIT to state [30]
+transition on DOWN to state [29]
+transition on unaryExpression to state [28]
+transition on NUMBERLIT to state [27]
+transition on ID to state [26]
+transition on FLIP to state [25]
+
+-------------------
+lalr_state [54]: {
+  [binaryExpression ::= binaryExpression (*) PLUS binaryExpression , {SMILE PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= binaryExpression (*) MULTIPLY binaryExpression , {SMILE PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= binaryExpression (*) QUESTION binaryExpression , {SMILE PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [binaryExpression ::= binaryExpression (*) MINUS binaryExpression , {SMILE PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+  [statement ::= ID ASSIGN binaryExpression (*) SMILE , {EOF READ WRITE CALL WHEN DONE ID }]
+  [binaryExpression ::= binaryExpression (*) DIVIDE binaryExpression , {SMILE PLUS MINUS MULTIPLY DIVIDE QUESTION }]
+}
+transition on MULTIPLY to state [39]
+transition on QUESTION to state [38]
+transition on DIVIDE to state [37]
+transition on MINUS to state [36]
+transition on PLUS to state [35]
+transition on SMILE to state [55]
+
+-------------------
+lalr_state [55]: {
+  [statement ::= ID ASSIGN binaryExpression SMILE (*) , {EOF READ WRITE CALL WHEN DONE ID }]
+}
+
+-------------------
+lalr_state [56]: {
+  [variables ::= variable variables (*) , {EOF READ WRITE CALL WHEN ID }]
+}
+
+-------------------
+lalr_state [57]: {
+  [$START ::= program EOF (*) , {EOF }]
+}
+
+-------------------
+lalr_state [58]: {
+  [variable ::= ID LPAREN (*) type RPAREN SMILE , {EOF READ WRITE CALL WHEN ID }]
+}
+transition on type to state [59]
+
+-------------------
+lalr_state [59]: {
+  [variable ::= ID LPAREN type (*) RPAREN SMILE , {EOF READ WRITE CALL WHEN ID }]
+}
+transition on RPAREN to state [60]
+
+-------------------
+lalr_state [60]: {
+  [variable ::= ID LPAREN type RPAREN (*) SMILE , {EOF READ WRITE CALL WHEN ID }]
+}
+transition on SMILE to state [61]
+
+-------------------
+lalr_state [61]: {
+  [variable ::= ID LPAREN type RPAREN SMILE (*) , {EOF READ WRITE CALL WHEN ID }]
+}
+
+-------------------
+------- CUP v0.11b 20160615 (GIT 4ac7450) Parser Generation Summary -------
+  1 error and 12 warnings
+  32 terminals, 11 non-terminals, and 28 productions declared, 
+  producing 62 unique parse states.
+  9 terminals declared but not used.
+  0 non-terminals declared but not used.
+  0 productions never reduced.
+  2 conflicts detected (0 expected).
+  No code produced.
+---------------------------------------------------- (CUP v0.11b 20160615 (GIT 4ac7450))
+make: *** [parserD.java] Error 100
