@@ -16,21 +16,17 @@ FILE=    Lexer.java parser.java sym.java\
 	LexerTest.java ScannerTest.java Token.java Program.java BinExpr.java\
 	UnaryExpr.java OperandExpr.java Statement.java\
 	AssignmentStmt.java ReadStmt.java WriteStmt.java CallStmt.java WhenStmt.java\
-	IDList.java Body.java VarStmtList.java Variable.java
+	IDList.java Body.java VarStmtList.java Variable.java MainRoutine.java Routine.java\
+	InOut.java InOutList.java InParam.java OutParam.java
 
-run: sampleFile1.utd sampleFile2.utd
+run: sampleFile.utd
 
 all: Lexer.java parser.java $(FILE:java=class)
 
-sampleFile1.utd: all
-		$(JAVA) -cp $(CP) ScannerTest sampleFile1.utd > sampleFile1-output.txt
-		cat sampleFile1.utd
-		cat -n sampleFile1-output.txt
-
-sampleFile2.utd: all
-		$(JAVA) -cp $(CP) ScannerTest sampleFile2.utd > sampleFile2-output.txt
-		cat sampleFile2.utd
-		cat -n sampleFile2-output.txt
+sampleFile.utd: all
+		$(JAVA) -cp $(CP) ScannerTest sampleFile.utd > sampleFile-output.txt
+		cat sampleFile.utd
+		cat -n sampleFile-output.txt
 
 clean:
 		rm -f *.class *~ *.bak Lexer.java parser.java sym.java

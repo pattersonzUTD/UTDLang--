@@ -45,14 +45,45 @@ non terminal VarStmtList statements;
 non terminal Statement statement;
 non terminal Variable variable;
 non terminal Body body;
+non terminal RoutineList routines;
+non terminal Routine routine;
+non terminal MainRoutine main;
+non terminal InOutList ins;
+non terminal InOutList outs;
 
 precedence left PLUS, MINUS;
 precedence left MULTIPLY, DIVIDE;
 precedence left QUESTION;
 
-program ::= body:b
-        {: RESULT = new Program(b); :}
+program ::= routines:r main:m
+        {: RESULT = new Program(r.append(m)); :}
         ;
+
+routines ::= routine:r routines:rr
+         {: RESULT = rr.prepend(r); :}
+         |
+         {: RESULT = new RoutineList(); :}
+         ;
+
+routine ::= ID:i ins:in outs:o START body:b END
+        {: RESULT = new Routine(i,in.join(o),b); :}
+        ;
+
+ins ::= IN COLON ID:i LPAREN type:t RPAREN ins:in
+    {: RESULT = in.prepend(new InParam(i,t)); :}
+    |
+    {: RESULT = new InOutList(); :}
+    ;
+
+main ::= MAIN START body:b END
+     {: RESULT = new MainRoutine(b); :}
+     ;
+
+outs ::= OUT COLON ID:i LPAREN type:t RPAREN outs:o
+    {: RESULT = o.prepend(new OutParam(i,t)); :}
+    |
+    {: RESULT = new InOutList(); :}
+    ;
 
 body ::= varAndStatementList:v
      {: RESULT = new Body(v); :}

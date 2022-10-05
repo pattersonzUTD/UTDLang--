@@ -3,13 +3,13 @@ sqrtLoop in:value(number) in:guess(number) out:result(number) out:approx(flag)st
      guessPP (number) :)
      when guess * guess ? value do
           nextGuess <- guess - 1 :)
-          sqrtLoop(value nextGuess result approx) :)
+          call sqrtLoop(value nextGuess result approx) :)
      done :)
 
      guessPP <- guess + 1 :)
 
      when value ? guess * guess * flip guessPP * guessPP ? value do
-          sqrtLoop(value guessPP result) :)
+          call sqrtLoop(value guessPP result) :)
      done :)
 
      when value ? guess * guess * guessPP * guessPP ? value do
@@ -24,7 +24,7 @@ end
 sqrt in:value(number) out:result(number) out:approx(flag) start
      guess (number) :)
      guess <- value / 2 :)
-     sqrtLoop(number guess result approx) :)
+     call sqrtLoop(value guess result approx) :)
 end
 
 main start
@@ -33,9 +33,9 @@ main start
      sum (number) :)
      c (number) :)
      approx (flag) :)
+     textBuffer (string) :)
      a <- 01 :)
      a <- -5 :)
-     textBuffer (string) :)
      textBuffer <- "Lets get the length of the hypotenuse!" :)
      write(textBuffer) :)
      textBuffer <- "input length of leg A:" :)

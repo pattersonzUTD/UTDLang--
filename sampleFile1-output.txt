@@ -1,14 +1,1 @@
-Program:
-	Body:
-		a <- number:5 :)
-		b <- (var:a + number:10) :)
-		c <- flag:true :)
-		d <- flip(var:c) :)
-		write(a) :)
-		read(b) :)
-		call e(a b c ) :)
-		call f() :)
-		when (var:c ? var:d) do
-			a <- number:20 :)
-		done :)
-
+instead expected token classes are [OUT]
