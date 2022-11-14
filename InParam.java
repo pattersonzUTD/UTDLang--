@@ -10,4 +10,12 @@ class InParam extends InOut {
   public String toString(int t) {
     return "in:" + id + " (" + type + ")";
   }
+
+  public String typeCheck() throws UTDLangException {
+    symbolTable.addVar(id,type.toLowerCase());
+    return "";
+  }
+  public String getType() {
+    return type;
+  }
 }

@@ -20,4 +20,12 @@ class VarStmtList extends Token {
     }
     return ret;
   }
+
+  public String typeCheck() throws UTDLangException {
+    for (Statement s : stmtVar) {
+      String dummy = s.typeCheck();
+    }
+    return "";
+  }
+
 }

@@ -1,5 +1,7 @@
- abstract class Token {
-
+abstract class Token {
+  
+  protected static SymbolTable symbolTable;
+  
   protected String getTabs(int t)
   {
   	String tabs = "";
@@ -12,4 +14,7 @@
   {
   	return "";
   }
+
+   abstract String typeCheck() throws UTDLangException;
+   
 }

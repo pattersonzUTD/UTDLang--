@@ -10,4 +10,13 @@ class CallStmt extends Statement {
   public String toString(int t) {
     return getTabs(t) + "call " + callee + "(" + ids.toString(0) + ") :)\n";
   }
+  public String typeCheck() throws UTDLangException {
+    String paramReqs = symbolTable.get(callee);
+    String idTypes = ids.typeCheck();
+    if (!paramReqs.equals(idTypes)) {
+      throw new UTDLangException("Error: incompatible parameters" + " : " + toString(0));
+    }
+    return "";
+  }
+
 }

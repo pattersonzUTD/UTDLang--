@@ -180,5 +180,5 @@ operandExpression ::= ID:i
                   {: RESULT = new OperandExpr(n); :}
                   |
                   STRINGLIT:s
-                  {: RESULT = new OperandExpr(s, "strLit"); :}
+                  {: RESULT = new OperandExpr(s, "string"); :}
                   ;

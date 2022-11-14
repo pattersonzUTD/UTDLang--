@@ -20,4 +20,12 @@ class IDList extends Token {
     }
     return ret;
   }
+
+  public String typeCheck() throws UTDLangException {
+    String fullType = ":";
+    for (String i : ids) {
+      fullType = fullType + symbolTable.get(i) + ":";
+    }
+    return fullType;
+  }
 }

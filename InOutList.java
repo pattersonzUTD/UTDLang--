@@ -25,4 +25,19 @@ class InOutList extends Token {
     }
     return ret;
   }
+  
+  public String typeCheck() throws UTDLangException {
+    for (InOut i : params) {
+      String a = i.typeCheck();
+    }
+    return "";
+  }
+
+  public String getType() {
+    String fullType = ":";
+    for (InOut i : params) {
+      fullType = fullType + i.getType() + ":";
+    }
+    return fullType;
+  }
 }

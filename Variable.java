@@ -10,4 +10,10 @@ class Variable extends Statement {
   public String toString(int t) {
     return getTabs(t) + id + " (" + type + ") :)\n";
   }
+
+  public String typeCheck() throws UTDLangException {
+    symbolTable.addVar(id,type.toLowerCase());
+    return "";
+  }
+
 }

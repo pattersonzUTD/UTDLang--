@@ -25,4 +25,10 @@ class RoutineList extends Token {
     }
     return ret;
   }
+  public String typeCheck() throws UTDLangException {
+    for (Routine r : routines) {
+      String dummy = r.typeCheck();
+    }
+    return "";
+  }
 }

@@ -20,4 +20,16 @@ class OperandExpr extends Expr {
   public String toString(int t) {
     return getTabs(t) + type + ":" + value;
   }
+
+  public String typeCheck() throws UTDLangException {
+    if (!type.equals("var")) {
+      return type;
+    }
+    String varType = symbolTable.get(value);
+    if (varType.equals("") || varType.startsWith(":")) {
+      throw new UTDLangException("Error: tried to reference undeclared variable" + " : " + toString(0));
+    }
+    return varType;
+  }
+  
 }

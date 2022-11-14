@@ -8,4 +8,9 @@ class Body extends Token {
   public String toString(int t) {
     return getTabs(t) + "Body:\n" + stmtVar.toString(t+1);
   }
+
+  public String typeCheck() throws UTDLangException {
+    return stmtVar.typeCheck();
+  }
+
 }

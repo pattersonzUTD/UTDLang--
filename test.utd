@@ -1,0 +1,11 @@
+c in:a(number) out:c(flag) start
+  c <- a ? 2 :)
+end
+
+main start
+     a (number) :)
+     b (flag) :)
+     a <- -5 :)
+     b <- b :)
+     call c(a b) :)
+end
